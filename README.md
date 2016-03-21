@@ -1,1 +1,1 @@
-# A React, ES2015 and Sass boilerplate to create awesome apps
+# A React and Sass boilerplate to create awesome apps
