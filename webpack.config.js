@@ -1,40 +1,23 @@
 const path = require('path');
+const args = require('minimist')(process.argv.slice(2));
 
-module.exports = {
-  entry: './app/index.js',
-  output: {
-    path: path.resolve(__dirname, 'public'),
-    fileName: 'bundle.js'
-  },
-  devtool: 'source-map',
-  module: {
-    loaders: [
-      {
-        test: /\.scss$/,
-        exclude: /(node_modules|bower_components)/,
-        loaders: ['style', 'css', 'sass']
-      },
-      {
-        test: /\.html$/,
-        exclude: /(node_modules|bower_components)/,
-        loader: 'html'
-      },
-      {
-        test: /\.jsx?$/,
-        exclude: /(node_modules|bower_components)/,
-        loader: 'babel',
-        query: {
-          presets: ['react', 'es2015']
-        }
-      },
-      {
-        test: /\.(png|jpg|gif|jpeg)$/,
-        include: path.resolve(__dirname, 'app/assets'),
-        loader: 'file-loader'
-      }
-    ]
-  },
-  devServer: {
-    contentBase: path.resolve(__dirname, 'app')
-  }
-};
+// List of allowed environments
+const allowedEnvs = ['dev', 'dist'];
+
+// Set the correct environment
+const env = args.env ? args.env : 'dev';
+
+// used by webpack to know the env variable
+// process.env.REACT_WEBPACK_ENV = env;
+
+// Build the webpack configuration depending on environment variable
+// defaults to dev
+// Returns a Webpack config object
+function buildConfig(wantedEnv) {
+  const isValid = wantedEnv && wantedEnv.length > 0 && allowedEnvs.indexOf(wantedEnv) !== -1;
+  const validEnv = isValid ? wantedEnv : 'dev';
+  const config = require(path.join(__dirname, `webpackConfigs/${validEnv}`));
+  return config;
+}
+
+module.exports = buildConfig(env);

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-require('./helloWorld.scss');
+require('styles/helloWorld.scss');
 
 class HelloWorld extends Component {
   constructor(props) {

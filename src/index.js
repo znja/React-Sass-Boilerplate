@@ -1,10 +1,9 @@
 import React from 'react';
 import ReactDom from 'react-dom';
 // Components
-import HelloWorld from './components/helloWorld/helloWorld';
+import HelloWorld from './components/helloWorld';
 // Main scss
-// require('style/url!file!../node_modules/normalize.css/normalize.css');
-require('./style.scss');
+require('styles/style.scss');
 
 const App = function () {
   return (
